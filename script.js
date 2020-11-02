@@ -1,4 +1,6 @@
 let dataSource = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
+let chartHeight = 600;
+let chartWidth = 800;
 
 const getData = async() => {
     return (await fetch(dataSource)).json();
@@ -6,8 +8,8 @@ const getData = async() => {
 
 const svg = d3.select("body")
     .append("svg")
-    .attr("width", 800)
-    .attr("height", 600)
+    .attr("width", chartWidth)
+    .attr("height", chartHeight)
 
 let createScales = () => {
 
@@ -33,8 +35,8 @@ getData().then(data => {
        .data(data.data)
        .enter()
        .append("rect")
-       .attr("x", (d, i) => i * 11)
-       .attr("y", 0)
+       .attr("x", (_, i) => i * 11)
+       .attr("y", (d) => chartHeight - d[1])
        .attr("width", 10)
-       .attr("height", 100);
+       .attr("height", d => d[1]);
 });
