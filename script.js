@@ -26,13 +26,15 @@ let createAxes = () => {
         .attr('transform', 'translate(' + padding + ', 0)')
 }
 
+
 getData().then(data => {
+    console.log(data.data.length)
     svg.selectAll("rect")
        .data(data.data)
        .enter()
        .append("rect")
-       .attr("x", (_, i) => i * 30)
+       .attr("x", (d, i) => i * 11)
        .attr("y", 0)
-       .attr("width", 25)
+       .attr("width", 10)
        .attr("height", 100);
 });
