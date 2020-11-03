@@ -13,3 +13,13 @@ body {
 svg{
     background-color: blanchedalmond;
 }
+
+.bar{
+    background-color: #2B7A78;
+    border-color: #2B7A78;
+    fill: #2B7A78;
+}
+
+.bar:hover{
+    fill: #17252A
+}
