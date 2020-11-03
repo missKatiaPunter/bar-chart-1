@@ -30,10 +30,12 @@ let createAxes = () => {
 }
 
 
-getData().then(data => {
-    console.log(data.data.length)
+getData().then(input => {
+    const {data} = input;
+    let extent = d3.extent(data, d => d[1]);
+    console.log(extent);
     svg.selectAll("rect")
-       .data(data.data)
+       .data(data)
        .enter()
        .append("rect")
        .attr('class', 'bar')
