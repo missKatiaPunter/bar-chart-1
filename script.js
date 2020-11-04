@@ -16,10 +16,6 @@ const svg = d3.select("body")
     .attr("height", chartHeight)
     .attr('padding', padding)
 
-let createScales = () => {
-
-}
-
 let createAxes = () => {
     let xAxis = d3.axisBottom(xScale)
     let yAxis = d3.axisLeft(yScale)
@@ -33,18 +29,18 @@ let createAxes = () => {
         .attr('transform', 'translate(' + padding + ', 0)')
 }
 
-
 getData().then(input => {
     const { data } = input;
     let extent = d3.extent(data, d => d[1]);
     xScale = d3.scaleLinear().domain([0, data.length-1]).range([padding, chartWidth-padding]);
+    yScale = d3.scaleLinear().domain([0, extent[1]]).range([padding, chartHeight-padding]);
     svg.selectAll("rect")
        .data(data)
        .enter()
        .append("rect")
        .attr('class', 'bar')
        .attr("x", (_, i) => xScale(i))
-       .attr("y", (d) => chartHeight - d[1])
+       .attr("y", (d) => chartHeight - padding - yScale(d[1]))
        .attr("width", (chartWidth - (2 * padding)) / data.length)
-       .attr("height", d => d[1]);
+       .attr("height", d => yScale(d[1]));
 });
