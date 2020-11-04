@@ -22,7 +22,7 @@ let createAxes = () => {
     svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
-        .attr('transform', 'translate(0, ' + (height-padding) + ')')
+        .attr('transform', 'translate(0, ' + (chartHeight-padding) + ')')
     svg.append('g')
         .call(yAxis)
         .attr('id', 'y-axis')
@@ -34,6 +34,7 @@ getData().then(input => {
     let extent = d3.extent(data, d => d[1]);
     xScale = d3.scaleLinear().domain([0, data.length-1]).range([padding, chartWidth-padding]);
     yScale = d3.scaleLinear().domain([0, extent[1]]).range([padding, chartHeight-padding]);
+    createAxes();
     svg.selectAll("rect")
        .data(data)
        .enter()
