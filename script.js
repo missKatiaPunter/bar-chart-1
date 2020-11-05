@@ -33,8 +33,7 @@ getData().then(input => {
     const { data } = input;
     let xExtent = d3.extent(data, d => new Date(d[0]));
     xScale = d3.scaleTime().domain(xExtent).range([padding, chartWidth-padding]);
-    let yExtent = d3.extent(data, d => d[1]);
-    yScale = d3.scaleLinear().domain([0, yExtent[1]]).range([chartHeight-padding, padding]);
+    yScale = d3.scaleLinear().domain([0, d3.max(data,d=>d[1])]).range([chartHeight-padding, padding]);
     createAxes();
     svg.selectAll("rect")
        .data(data)
