@@ -15,8 +15,8 @@ const svg = d3.select("body")
     .attr("width", chartWidth)
     .attr("height", chartHeight)
 
-let createAxes = () => {
-    let xAxis = d3.axisBottom(xScale);
+const createAxes = () => {
+    let xAxis = d3.axisBottom(xScale).ticks(5);
     let yAxis = d3.axisLeft(yScale);
     svg.append('g')
         .call(xAxis)
@@ -28,12 +28,21 @@ let createAxes = () => {
         .attr('transform', 'translate(' + padding + ', 0)')
 }
 
+const createLegend = () => {
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -240)
+        .attr('y', 80)
+        .text('Gross Domestic Product');
+}
+
 getData().then(input => {
     const { data } = input;
     let xExtent = d3.extent(data, d => new Date(d[0]));
     xScale = d3.scaleTime().domain(xExtent).range([padding, chartWidth-padding]);
     yScale = d3.scaleLinear().domain([0, d3.max(data,d=>d[1])]).range([chartHeight-padding, padding]);
     createAxes();
+    createLegend();
     svg.selectAll("rect")
        .data(data)
        .enter()
