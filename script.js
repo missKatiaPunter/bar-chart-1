@@ -1,7 +1,7 @@
 let dataSource = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
 let chartHeight = 600;
 let chartWidth = 800;
-let padding = 20;
+let padding = 40;
 
 let xScale;
 let yScale;
@@ -31,9 +31,11 @@ let createAxes = () => {
 
 getData().then(input => {
     const { data } = input;
-    let extent = d3.extent(data, d => d[1]);
-    xScale = d3.scaleLinear().domain([0, data.length-1]).range([padding, chartWidth-padding]);
-    yScale = d3.scaleLinear().domain([0, extent[1]]).range([padding, chartHeight-padding]);
+    let xExtent = d3.extent(data, d => new Date(d[0]));
+    xScale = d3.scaleTime().domain(xExtent).range([padding, chartWidth-padding]);
+    let yExtent = d3.extent(data, d => d[1]);
+    console.log(yExtent)
+    yScale = d3.scaleLinear().domain([0, yExtent[1]]).range([padding, chartHeight-padding]);
     createAxes();
     svg.selectAll("rect")
        .data(data)
