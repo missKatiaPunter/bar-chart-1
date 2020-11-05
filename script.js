@@ -14,7 +14,6 @@ const svg = d3.select("body")
     .append("svg")
     .attr("width", chartWidth)
     .attr("height", chartHeight)
-    .attr('margin', padding)
 
 let createAxes = () => {
     let xAxis = d3.axisBottom(xScale)
@@ -22,7 +21,7 @@ let createAxes = () => {
     svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
-        .attr('transform', 'translate(0, ' + (chartHeight-padding) + ')')
+        .attr('transform', 'translate(' + [0,chartHeight-padding] + ')')
     svg.append('g')
         .call(yAxis)
         .attr('id', 'y-axis')
