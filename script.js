@@ -16,8 +16,8 @@ const svg = d3.select("body")
     .attr("height", chartHeight)
 
 let createAxes = () => {
-    let xAxis = d3.axisBottom(xScale).ticks(9);
-    let yAxis = d3.axisLeft(yScale).ticks(10);
+    let xAxis = d3.axisBottom(xScale);
+    let yAxis = d3.axisLeft(yScale);
     svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
@@ -39,6 +39,8 @@ getData().then(input => {
        .enter()
        .append("rect")
        .attr('class', 'bar')
+       .attr('data-date', (d, i)  => data[i][0])
+       .attr('data-gdp', (d, i) => data[i][1])
        .attr("x", (d) => xScale(new Date(d[0])))
        .attr("y", (d) => yScale(d[1]))
        .attr("width", 2)
