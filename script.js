@@ -16,8 +16,8 @@ const svg = d3.select("body")
     .attr("height", chartHeight)
 
 let createAxes = () => {
-    let xAxis = d3.axisBottom(xScale)
-    let yAxis = d3.axisLeft(yScale)
+    let xAxis = d3.axisBottom(xScale).ticks(9);
+    let yAxis = d3.axisLeft(yScale).ticks(10);
     svg.append('g')
         .call(xAxis)
         .attr('id', 'x-axis')
