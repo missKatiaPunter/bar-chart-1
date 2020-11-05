@@ -1,7 +1,7 @@
 let dataSource = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
 let chartHeight = 600;
 let chartWidth = 800;
-let padding = 40;
+let padding = 50;
 
 let xScale;
 let yScale;
@@ -14,7 +14,7 @@ const svg = d3.select("body")
     .append("svg")
     .attr("width", chartWidth)
     .attr("height", chartHeight)
-    .attr('padding', padding)
+    .attr('margin', padding)
 
 let createAxes = () => {
     let xAxis = d3.axisBottom(xScale)
@@ -34,16 +34,15 @@ getData().then(input => {
     let xExtent = d3.extent(data, d => new Date(d[0]));
     xScale = d3.scaleTime().domain(xExtent).range([padding, chartWidth-padding]);
     let yExtent = d3.extent(data, d => d[1]);
-    console.log(yExtent)
-    yScale = d3.scaleLinear().domain([0, yExtent[1]]).range([padding, chartHeight-padding]);
+    yScale = d3.scaleLinear().domain([0, yExtent[1]]).range([chartHeight-padding, padding]);
     createAxes();
     svg.selectAll("rect")
        .data(data)
        .enter()
        .append("rect")
        .attr('class', 'bar')
-       .attr("x", (_, i) => xScale(i))
-       .attr("y", (d) => chartHeight - padding - yScale(d[1]))
-       .attr("width", (chartWidth - (2 * padding)) / data.length)
-       .attr("height", d => yScale(d[1]));
+       .attr("x", (d) => xScale(new Date(d[0])))
+       .attr("y", (d) => yScale(d[1]))
+       .attr("width", 2)
+       .attr("height", d => chartHeight - padding - yScale(d[1]));
 });
