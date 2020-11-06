@@ -59,6 +59,10 @@ getData().then(input => {
        .attr("y", (d) => yScale(d[1]))
        .attr("width", 2)
        .attr("height", d => chartHeight - padding - yScale(d[1]))
-       .on('mouseover', (_, i) => tooltip.style("visibility", "visible").html(i))
+       .on('mouseover', (_, i) => {
+           tooltip.style("visibility", "visible")
+                .html(`Period: ${i[0]}`)
+                .attr('data-date', i[0])
+       })
        .on("mouseout", () => tooltip.style("visibility", "hidden"));
 });
