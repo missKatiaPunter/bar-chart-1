@@ -15,6 +15,11 @@ const svg = d3.select("body")
     .attr("width", chartWidth)
     .attr("height", chartHeight)
 
+const tooltip = d3.select('body')
+    .append('div')
+    .attr('id', 'tooltip')
+    .style("visibility", "hidden")
+
 const createAxes = () => {
     let xAxis = d3.axisBottom(xScale).ticks(5);
     let yAxis = d3.axisLeft(yScale);
@@ -33,7 +38,7 @@ const createLegend = () => {
         .attr('transform', 'rotate(-90)')
         .attr('x', -240)
         .attr('y', 80)
-        .text('Gross Domestic Product');
+        .text('Gross Domestic Product, $');
 }
 
 getData().then(input => {
@@ -53,5 +58,7 @@ getData().then(input => {
        .attr("x", (d) => xScale(new Date(d[0])))
        .attr("y", (d) => yScale(d[1]))
        .attr("width", 2)
-       .attr("height", d => chartHeight - padding - yScale(d[1]));
+       .attr("height", d => chartHeight - padding - yScale(d[1]))
+       .on('mouseover', (_, i) => tooltip.style("visibility", "visible").html(i))
+       .on("mouseout", () => tooltip.style("visibility", "hidden"));
 });
