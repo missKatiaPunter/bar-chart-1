@@ -26,7 +26,7 @@ const svg = d3.select("body")
 const tooltip = d3.select('body')
     .append('div')
     .attr('id', 'tooltip') //sets the tooltip id to pass the first tooltip test
-    .style("visibility", "hidden") //makes tooltip 
+    .style("visibility", "hidden") //makes tooltip invisible on page load
 
 const createAxes = () => {
     let xAxis = d3.axisBottom(xScale).ticks(5); //Sets exactly 5 x-axis ticks
